@@ -106,7 +106,7 @@ H$\alpha$ emission and excess UV and infrared continuum
 emission~\citep{2005MNRAS.358..671K}.
 The line profiles exhibit both blue shifted absorption and inverse P Cygni
 features, thought to be evidence of outflows and inflows respectively.
-Observed accretion rates ($10^{-9}~\textrm{to}~10^{-7}~{\rm M_{\odot} yr^{-1}}$) are expected to be great enough to transfer enough AM to the star to spin it up to well above break up angular velocity $\Omega_B = \sqrt{\frac{GM_{*}}{R_{*}^3}}$~\citep{2005ApJ...632L.135M}. However a relevant fraction of these stars, once they become visible are rotating well below their rotation limit~\citep{1993A&A...272..176B}, and during the few million years of the accretion phase their rotation remains fairly constant. In this phase of their evolution these protostars are still accreting and contracting at rates that should spin them up to break velocity within $\sim10^{6}~{\rm yrs}$~\citep{2009A&A...508.1117Z}. There must be an efficient mechanism to spin down the rotation of the T Tauri stars. 
+Observed accretion rates ($10^{-9}~\textrm{to}~10^{-7}~{\rm M_{\odot} yr^{-1}}$) are expected to be great enough to transfer enough AM to the star to spin it up to well above break up angular velocity $\Omega_B = \sqrt{GM_{*}/R_{*}^3}$~\citep{2005ApJ...632L.135M}. However a relevant fraction of these stars, once they become visible are rotating well below their rotation limit~\citep{1993A&A...272..176B}, and during the few million years of the accretion phase their rotation remains fairly constant. In this phase of their evolution these protostars are still accreting and contracting at rates that should spin them up to break velocity within $\sim10^{6}~{\rm yrs}$~\citep{2009A&A...508.1117Z}. There must be an efficient mechanism to spin down the rotation of the T Tauri stars. 
 
 It is widely accepted that T Tauri stars have
 accretion disks. Infrared excess and accretion
@@ -125,7 +125,7 @@ accretion radius at some radii $R_T$. where the magnetic and material
 stresses are of the same order; $B^2/8\pi = p + \rho v^2$, where $B$,
 $p$, $\rho$ and $v$ are the magnetic field, pressure, density and
 velocity respectively~\citep{Romanova:2002hc}. Material is lifted from
-the disk and free falls to the stellar surface where it forms a shock region as the in falling matter exceeds the sound speed of the plasma. The large energy release in these shock zones could be responsible for the high UV excess observed~\citep{2009A&A...508.1117Z}. The accreting matter carries AM to the star and acts to `spin-up' the star. For a given accretion rate $\dot{M}$ the `spin-up' rate can be quantified as a torque~\citep{2005ApJ...632L.135M}
+the disk and free falls to the stellar surface where it forms a shock region as the in falling matter exceeds the sound speed of the plasma. The large energy release in these shock zones could be responsible for the high UV excess observed~\citep{2009A&A...508.1117Z}. The accreting matter carries AM to the star and acts to `spin-up' the star. For a given accretion rate $\dot{M}_{acc}$ the `spin-up' rate can be quantified as a torque~\citep{2005ApJ...632L.135M}
 \begin{equation}
     \tau_{acc} = \dot{M}_{acc}\sqrt{GM_{\ast}R_T}
     \label{eq:accretion_torque}
@@ -137,7 +137,14 @@ The means by which these T Tauri stars are being braked is still debated~\citep{
 The star-disk interactions rely on Magnetohydrodynamic (MHD) mechanism to remove angular momentum from the star. Magnetic fields threading through the disk and star will provide a negative (or `spin-down') torque if they pass through the accretion disk at radii beyond the corotation radius. The poloidal field lines becomes twisting as the conductive disk opposes their toroidal passage~\citep{Uzdensky:2002dg} resulting in a `spin-down' torque on the star. 
 However it not clear whether a `spin-down' torque great enough to match the AM transferred by accretion can be achieved by this magnetic breaking.~\citet{2009A&A...508.1117Z} concluded that for their numerical example the spin down torque from the magnetospheric star-disk ``locking'' could only account for $10\%$ of the spin up torque from accretion.
 
+\citep{Shu:tw} proposed that a disk wind along open field lines threading the disk at the corotation radius (``X-wind'') could remove enough AM from the disk that it could render the `spin-up' torque from accretion negligible. This theory still lacks a fully self consistent dynamical explanation. Another proposed mechanism that the AM can be removed from the star via the interaction of the magnetic field and a stellar wind~\citep[e.g.][]{2005ApJ...632L.135M,Matt:2008bj}. 
 
+\begin{equation}
+    \tau_{w} = -\kappa \dot{M}_{w} \Omega_{\ast} r_A^2
+    \label{eq:wind_torque}
+\end{equation}
+
+Equation~\ref{eq:wind_torque} from~\citep{2005ApJ...632L.135M} gives the torque felt by a star for a given mass loss rate $\dot{M}_{w}$, the stellar rotation rate $\Omega_{\ast}$, the Alfv\'en radius $r_A$ and $\kappa$ a dimensionless quantity accounting for the geometry of the wind. The stellar wind is accelerated by the magnetic field to corotate with the star effectively acting as a solid body out to the Alfv\'en radius from where AM is conserved. This transfers of AM to the wind breaks the star's rotation. The Alfv\'en radius acts like a `lever-arm' slowing the star. Observational evidence of stellar winds have been observed~\citep[e.g.][]{2003ApJ...599L..41E,2006ApJ...646..319E} but the mechanisms driving the winds is still uncertain as T Tauri stars are not active enough to drive stellar winds with a higher enough mass loss rate to match the accretion torque unless a significant proportion ($\sim 36\%$) of the accretion power was used to drive the outflow~\citep{2009A&A...508.1117Z,Matt:2008ic}. The mechanism driving such winds is still uncertain.~\citet{2008ApJ...689..316C} proposed that turbulent magnetic waves could cause stellar wind with a high enough mass loss rate.
 
 
 
