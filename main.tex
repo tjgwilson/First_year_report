@@ -47,6 +47,7 @@
 \usepackage{rotating}
 \usepackage{esdiff}
 \usepackage{esint}
+\usepackage{breqn}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%% AUTHORS - PLACE YOUR OWN COMMANDS HERE %%%%%
@@ -96,16 +97,16 @@ $^{1}$College of Engineering, Mathematics and Physical Sciences, Physics Buildin
 Understanding the mechanism by which collapsing interstellar clouds lose angular momentum (hereafter AM), allowing them to form pre-main sequence stars is critical to furthering the study of star and planet formation. Without the loss of AM, the difference in scale of the natal cloud to the protostar would result in a star that was rotating faster than its break up angular velocity~\citep{Hartmann:2016gu}. 
 
 
-Progenitors to Sun-like objects are T Tauri stars. These are low mass ($\lesssim 2 \textrm{M}_\odot$) pre-main sequence stars which show evidence of accretion from a surrounding accretion disk~\citep{1998ApJ...495..385H}. These young stars ($\lesssim3\times10^{6}~\textrm{yrs}$) have strong H$\alpha$ emission and excess UV and infrared continuum emission~\citep{2005MNRAS.358..671K}. The line profiles exhibit both blue shifted absorption and inverse P Cygni features thought to be evidence of outflows and inflows, respectively. Observed accretion rates ($10^{-9}~\textrm{to}~10^{-7}~{\rm M_{\odot} yr^{-1}}$) are expected to be great enough to transfer enough AM to the star to spin it up to well above break up angular velocity $\Omega_B = \sqrt{GM_{*}/R_{*}^3}$~\citep{2005ApJ...632L.135M}. However, a relevant fraction of these stars, once they become visible are rotating well below their rotation limit~\citep{1993A&A...272..176B}, and during the few million years of the accretion phase, their rotation remains fairly constant. In this phase of their evolution, these protostars are still accreting and contracting at rates that should spin them up to break velocity within $\sim10^{6}~{\rm yrs}$~\citep{2009A&A...508.1117Z}. There must be an efficient mechanism to spin down the rotation of the T Tauri stars. 
+Progenitors to Sun-like objects are T Tauri stars. These are low mass ($\lesssim 2 \textrm{M}_\odot$) pre-main sequence stars which show evidence of accretion from a surrounding accretion disk~\citep{1998ApJ...495..385H}. These young stars ($\lesssim3\times10^{6}~\textrm{yrs}$) have strong H$\alpha$ emission and excess UV and infrared continuum emission~\citep{2005MNRAS.358..671K}. The line profiles exhibit both blue shifted absorption and inverse P Cygni features thought to be evidence of outflows and inflows, respectively. Observed accretion rates ($10^{-9}~\textrm{to}~10^{-7}~{\rm M_{\odot} yr^{-1}}$) are expected to be great enough to transfer enough AM to the star to spin it up to well above break up angular velocity $\Omega_B = \sqrt{GM_{*}/R_{*}^3}$~\citep{2005ApJ...632L.135M} where $M_{\ast}$ and $R_{\ast}$ are the stellar mass and radius respectively. However, a relevant fraction of these stars are rotating well below their rotation limit~\citep{1993A&A...272..176B}, and during the few million years of their accretion phase, their rotation remains fairly constant. In this phase of their evolution, these protostars are still accreting and contracting at rates that should spin them up to break velocity within $\sim10^{6}~{\rm yrs}$~\citep{2009A&A...508.1117Z}. There must be an efficient mechanism to spin down the rotation of the T Tauri stars. 
 
 
 It is widely accepted that T Tauri stars have accretion disks. Infrared excess and accretion signatures point to their presence. In recent years interferometric observations have confirmed the presence of disks around young stellar objects, for example, the slightly larger Herbig star system shown by \cite{2012ApJ...752...11K} to have a circumstellar disk. The accretion mechanism of T Tauri stars is thought to be dominated by the strong magnetic fields present, $\sim 10^{3}~\textrm{G}$~\citep{2012MNRAS.426.2901K}. \citet{1991ApJ...370L..39K} proposed that the accretion mechanism is similar to that of neutrons stars proposed by~\citet{1977ApJ...217..578G}. The magnetic field truncates the accretion radius at some radii $R_T$. where the magnetic and material stresses are of the same order; $B^2/8\pi = p + \rho v^2$, where $B$, $p$, $\rho$ and $v$ are the magnetic field, pressure, density, and velocity respectively~\citep{Romanova:2002hc}. Material is lifted from the disk and free-falls to the stellar surface where it forms a shock region, as the infalling matter exceeds the sound speed of the plasma. The large energy release in these shock zones could be responsible for the high UV excess observed~\citep{2009A&A...508.1117Z}. The accreting matter carries AM to the star and acts to `spin-up' the star. For a given accretion rate $\dot{M}_{acc}$ the `spin-up' rate can be quantified as a torque~\citep{2005ApJ...632L.135M}
 
 \begin{equation}
-    \tau_{acc} = \dot{M}_{acc}\sqrt{GM_{\ast}R_T}
+    \tau_{acc} = \dot{M}_{acc}\sqrt{GM_{\ast}R_{T}}.
     \label{eq:accretion_torque}
 \end{equation}
-here $M_{\ast}$ is the stellar mass. How these T Tauri stars are being braked is still debated~\citep{Hartmann:2016gu}. The possible mechanisms can be split broadly into two types; star-disk interactions and outflows. 
+How these T Tauri stars are being braked is still debated~\citep{Hartmann:2016gu} but the possible mechanisms can be split broadly into two types; star-disk interactions and outflows. 
 
 
 The star-disk interactions rely on Magnetohydrodynamic (MHD) mechanism to remove angular momentum from the star. Magnetic fields threading through the disk and star will provide a negative (or `spin-down') torque if they pass through the accretion disk at radii beyond the corotation radius. The poloidal field lines become twisting as the conductive disk opposes their toroidal passage~\citep{Uzdensky:2002dg} resulting in a `spin-down' torque on the star.  However it not clear whether a `spin-down' torque great enough to match the AM transferred by accretion can be achieved by this magnetic breaking.~\citet{2009A&A...508.1117Z} concluded that for their numerical example the spin down torque from the magnetospheric star-disk ``locking'' could only account for $10\%$ of the spin-up torque from accretion.
@@ -140,10 +141,29 @@ Past radiative transfer simulations of T Tauri stars have used a Sobolev approxi
 \end{equation}
 If the velocity gradient is approximated as $v/R$, where $R$ is the characteristic size of the system and $v$ characteristic large-scale velocity, the Sobolev length can be estimated by $s_0 = R/(v/v_t)$.
 
-The radiative transfer code used here is TORUS~\citep{2019A&C....27...63H}. It has been used~\citep[e.g.][]{2005MNRAS.356.1489S} to model T Tauri system using the Sobolev approximation~\citep{2005MNRAS.356.1489S}. However a new Co-Moving Frame (CMF) module has been written but as yet untested. The CMF code does not consider only the local vicinty to 
+The radiative transfer code used here is TORUS~\citep{2019A&C....27...63H}. It has been used~\citep[e.g.][]{2005MNRAS.356.1489S} to model T Tauri systems using the Sobolev approximation. Alternatively TORUS can use a co-moving frame (CMF) method. Unlike the Sobolev approximation the CMF code considers the whole system to be potentially effecting the radiative interactions of a given point, not just the local vicinity so there are no restriction on the velocity field. The full CMF frame treatment is considerably more computationally expensive than the methods using the Sobolev approximation 
+
+Initial work with TORUS has been modelling the atomic line profiles of a pure hydrogen model of a T Tauri system. The general outline of the computational steps are:
+\begin{enumerate}
+    \item Initially the grid is populated with gas and radiation sources (see \S\ref{sec:model})
+    \item The level populations of the atom in each grid cell are calculated using statistical equilibrium 
+    \item The spectral line profiles are then determined from the level populations
+\end{enumerate}
 
 
 \subsection{Statistical Equilibrium}
+\label{sec:statistical}
+
+The level populations are calculated assuming statistical equilibrium. The co-moving frame strategy solves for the level populations using a system based on the accelerated Monte Carlo scheme created by~\citet{Hogerheijde:2000wb}. The equation of statistical equilibrium that is solved is
+\\
+\begin{multline}
+    \sum_{m<n}\left[ N_m \left( B_{mn}\mathcal{J}_{mn}+N_eC_{mn}\right)-N_n\left( A_{nm}+B_{nm}\mathcal{J}_{mn}+N_eC_{nm}\right) \right]\\+
+    \sum_{m>n}\left[ N_m \left( A_{mn}+B_{mn}J_{mn}+N_eC_{mn}\right)-N_n\left( B_{nm}J_{mn}+N_eC_{nm}\right) \right]\\ +
+    N_{n}^{\ast} \left[ \int_{\nu_{n}}^{\infty} \frac{4\pi}{h\nu}a_{n}(\nu)\left( \frac{2h\nu^3}{c^2}+J_{\nu}\right)\exp{\left(-\frac{h\nu}{k_{B}T}\right)}{\rm d}\nu + N_{e}C_{nk}\right]\\
+    -N{n}\left(\int_{\nu_n}^{\infty} \frac{4\pi}{h\nu}a_{n}(\nu)J_{\nu}{\rm d}\nu +N_{e}C_{nk}\right)=0
+\end{multline}
+
+
 
 \subsection{Observed profile calculations}
 
@@ -156,10 +176,13 @@ The radiative transfer code used here is TORUS~\citep{2019A&C....27...63H}. It h
 
 
 \section{The models}
+\label{sec:model}
 
 \section{Current Results}
+\label{sec:results}
 
 \section{Conclusions}
+\label{sec:conclusions}
 
 %\section*{Acknowledgements}
 
