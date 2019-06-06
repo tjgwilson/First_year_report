@@ -193,7 +193,7 @@ Once the level populations $n_{l}$ are obtained the continuum emissivity $\chi_c
 \end{equation}
 where the continuum source is $S_{c}=\eta_{c}/\chi_{c}$ and the line source is $S_{l}=\eta_{l}/\chi_{l}$. The line profile $\phi_{\nu}$ as mention above is characterised by either microturbulent velocity broadening or stark broadening. Although when line broadening is negligible this is given by a normal Doppler profile.
 
-To compute an observed line profile an image grid (synthetic observer) is placed at a defined location outside of the simulation grid. This is used to create a synthetic position-position-velocity atomic line data cube. Rays are calculated with random position on the image grid intersecting with the simulation grid. Each ray is weighted by the number of rays originating in the same image grid cell.
+TORUS computes a synthetic line profile by placing an image grid (synthetic observer) at a defined location outside of the simulation grid. The grid is used to create a synthetic position-position-velocity atomic line data cube. Rays are calculated with a random position on the image grid intersecting with the simulation framework. Each ray is weighted by the number of rays originating in the same image grid cell.
 
 The specific intensity $I_{\nu}$ for a ray along $t$ is determined from
 \begin{equation}
@@ -211,13 +211,42 @@ The observed flux for a cell of the grid image is the summation of the specific 
 
 \section{The models}
 \label{sec:model}
-TORUS uses an adaptive mesh refinement (AMR) to create a grid of cell through which it can compute the level populations and intensities.  A numerical grid representing the physical space of the simulation is created and the coarseness of the cells is adapted to balance both the accuracy of the simulation and the efficiency. Too course a grid will loose details and may miss features such as areas of high opacity, whereas too fine a grid will run excessively slow and consume large amounts of computationally resources.
+TORUS uses an adaptive mesh refinement (AMR) to create a grid of cell through which it can compute the level populations and intensities.  A numerical grid representing the physical space of the simulation is created, and the coarseness of the cells is adapted to balance both the accuracy of the simulation and the efficiency. Too coarse a grid will lose details and may miss features such as areas of high opacity, whereas too fine a grid will run excessively slow and consume large amounts of computational resources.
 
-For the work presented here T Tauri star-disk systems are being simulated. For this the mesh is populated with a star, disk, accretion flow and potentially outflows. The density, temperatures and velocities fields defined so as to simulate a T Tauri system. Future work will be to load in this data as an output from MHD simulations but at the present time this is done analytically. TORUS has the ability to include He in the simulations although this is as yet unvalidated. 
+The work here presents the simulation of T Tauri star-disk systems. For this, the mesh is populated with a star, disk, accretion flow and potentially outflows. The density, temperatures and velocities fields are defined to simulate a T Tauri system. Future work will load in this data as an output from MHD simulations, but at present, this is done analytically. TORUS can include He in the simulations although this is as yet unvalidated. 
 
-The star is placed at the origin of the grid, and assumed to have an atmosphere as modelled by~\citet{1979ApJS...40....1K}. The disk is treated as geometrically thin optically thick disk. Rays that intersect with it are terminated, no continuum or dust emission from the disk is currently included in the model, although this will be implemented in future work.
+The star is placed at the origin of the grid and assumed to have an atmosphere as modelled by~\citet{1979ApJS...40....1K}. The disk is treated as a geometrically thin, optically thick disk. Rays that intersect with it are terminated, no continuum or dust emission from the disk is currently included in the model, although this will be implemented in future work.
 
 \subsection{Accretion Funnel}
+\label{sec:accretionflow}
+The geometry and parameters of the accretion flow are similar to those described by \citet{1998ApJ...495..385H}. The inner radius of the accretion flow is where the disk is truncated $R_{T}$. The outer radius $R_{\rm out}$ of the accretion flow is assumed to be the corotation radius, to avoid a ring of rapid acceleration where the disk spins up or down to match the magnetic field which is rotating as a rigid body with the star. Although MHD simulation show a twisting of the magnetic fields~\citep[e.g.][]{Uzdensky:2002dg} this is ignored in these simulation and the magnetic field is assumed to have only a poloidal component.
+
+The accreting matter free flows following the dipole magnetic field impacting on the surface of the star creating a hot spot. The temperature of the hot spot is calculated from the potential energy liberated as the matter falls to a lower radius.
+
+The geometry of the field is as explored by~\citet{1991ApJ...370L..39K,1977ApJ...217..578G}. For a starting radius at the equator $R_{0}$ in spherical coordinates, with a colatitude $theta$ the dipole streamline is given by
+\begin{equation}
+    R = R_{0}\sin^{2}(\theta).
+\end{equation}
+The poloidal magnetic field component at radius $R$ is
+\begin{equation}
+    B_{p}(R,\theta) = \mu R^{-3}\sqrt{4-3\sin^{2}(\theta )}
+\end{equation}
+where $\mu$ is the magnetic dipole moment. Finding the unit vector of the $B_p$ and converting to Cartesian coordinates gives the components of the accretion flows unit vector
+\begin{equation}
+     \mathbf{\hat{v}_p} = \frac{1}{\sqrt{4-3\sin^2\theta}}\left(3\sin(\theta)\sqrt{1-\sin^2\theta}\mathbf{\hat{x}}+(2-3\sin^2\theta)\mathbf{\hat{z}}\right).
+\end{equation}
+The magnitude of the flow at $R$ is calculated from the change in potential energy,
+\begin{equation}
+    v_p = \sqrt{2GM_{\ast}(\frac{1}{R} - \frac{1}{R_0})}
+\end{equation}
+the velocity of the flow is $\mathbf{v_p}=v_p\mathbf{\hat{v}_p}$.
+The density of the accretion flow is taken from~\citep{Hartmann:1994tl}. For an accretion rate $\dot{M}_{\rm acc}$ the density at radius $R$ is given to be
+\begin{equation}
+    \rho = \frac{\dot{M}_{\rm acc}}{4\pi(1/R_T - 1/R_{\rm out})}\frac{R^{-5/2}}{\sqrt{2GM_{\ast}}}\frac{\sqrt{4-3\sin^2\theta}}{\sqrt{1-\sin^2\theta}}
+\end{equation}
+The temperature distribution of the accretion flow is more problematic. The synthetic emission lines are very sensitive to temperature variations in these regions but exact mechanism of heating is debated. The temperature profile adopted is similar that used by~\citet{Hartmann:1994tl,1998AJ....116..455M} which assumes a volumetric heating $\propto R^{-3}$ balanced by radiative cooling. Figure~\ref{fig:tempdenvel} shows the temperature, density and velocity distributions used in our models compared to those used by~\citet{1998AJ....116..455M}.
+
+
 
 \subsection{Stellar Wind}
 
