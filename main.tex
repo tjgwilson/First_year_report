@@ -141,7 +141,7 @@ Past radiative transfer simulations of T Tauri stars have used a Sobolev approxi
 \end{equation}
 If the velocity gradient is approximated as $v/R$, where $R$ is the characteristic size of the system and $v$ characteristic large-scale velocity, the Sobolev length can be estimated by $s_0 = R/(v/v_t)$.
 
-The radiative transfer code used here is TORUS~\citep{2019A&C....27...63H}. It has been used~\citep[e.g.][]{2005MNRAS.356.1489S} to model T Tauri systems using the Sobolev approximation. Alternatively TORUS can use a co-moving frame (CMF) method. Unlike the Sobolev approximation the CMF code considers the whole system to be potentially effecting the radiative interactions of a given point, not just the local vicinity so there are no restriction on the velocity field. The full CMF frame treatment is considerably more computationally expensive than the methods using the Sobolev approximation 
+The radiative transfer code used here is TORUS~\citep{2019A&C....27...63H}. It has been used~\citep[e.g.][]{2005MNRAS.356.1489S} to model T Tauri systems using the Sobolev approximation. Alternatively, TORUS can use a co-moving frame (CMF) method. Unlike the Sobolev approximation, the CMF code considers the whole system to be potentially affecting the radiative interactions of a given point, not just the local vicinity, so there is no restriction on the velocity field. The full CMF treatment is considerably more computationally expensive than the methods using the Sobolev approximation.
 
 Initial work with TORUS has been modelling the atomic line profiles of a pure hydrogen model of a T Tauri system. The general outline of the computational steps are:
 \begin{enumerate}
@@ -154,14 +154,36 @@ Initial work with TORUS has been modelling the atomic line profiles of a pure hy
 \subsection{Statistical Equilibrium}
 \label{sec:statistical}
 
-The level populations are calculated assuming statistical equilibrium. The co-moving frame strategy solves for the level populations using a system based on the accelerated Monte Carlo scheme created by~\citet{Hogerheijde:2000wb}. The equation of statistical equilibrium that is solved is
-\\
+The level populations are calculated assuming statistical equilibrium. The co-moving frame strategy solves for the level populations using a system based on the accelerated Monte Carlo scheme created by~\citet{Hogerheijde:2000wb}. A balance of level populations is achieved in statistical equilibrium. Given by the balance equation
+% \begin{multline}
+%     \sum_{m<n}\left[ N_m \left( B_{mn}\mathcal{J}_{mn}+N_eC_{mn}\right)-N_n\left( A_{nm}+B_{nm}\mathcal{J}_{mn}+N_eC_{nm}\right) \right]\\+
+%     \sum_{m>n}\left[ N_m \left( A_{mn}+B_{mn}J_{mn}+N_eC_{mn}\right)-N_n\left( B_{nm}J_{mn}+N_eC_{nm}\right) \right]\\ +
+%     N_{n}^{\ast} \left[ \int_{\nu_{n}}^{\infty} \frac{4\pi}{h\nu}a_{n}(\nu)\left( \frac{2h\nu^3}{c^2}+J_{\nu}\right)\exp{\left(-\frac{h\nu}{k_{B}T}\right)}{\rm d}\nu + N_{e}C_{nk}\right]\\
+%     -N{n}\left(\int_{\nu_n}^{\infty} \frac{4\pi}{h\nu}a_{n}(\nu)J_{\nu}{\rm d}\nu +N_{e}C_{nk}\right)=0
+% \end{multline}
+% where $A_{mn}$ is the Einstein coefficient for spontaneous emission for the quantum levels $m$ and $n$, and $B_{mn}$ and $C_{mn}$ are the Einstein coefficient of stimulated absorption or emission and the collision rate coefficient respectively. $N_n$ is the level population of level $n$ and $N^{\ast}_n$ is the level population given by the Saha-Boltzmann equation for a temperature $T$ and electron density $N_e$. $a_n{\nu}$ is the photoionisation cross section for frequency $\nu$.
+
 \begin{multline}
-    \sum_{m<n}\left[ N_m \left( B_{mn}\mathcal{J}_{mn}+N_eC_{mn}\right)-N_n\left( A_{nm}+B_{nm}\mathcal{J}_{mn}+N_eC_{nm}\right) \right]\\+
-    \sum_{m>n}\left[ N_m \left( A_{mn}+B_{mn}J_{mn}+N_eC_{mn}\right)-N_n\left( B_{nm}J_{mn}+N_eC_{nm}\right) \right]\\ +
-    N_{n}^{\ast} \left[ \int_{\nu_{n}}^{\infty} \frac{4\pi}{h\nu}a_{n}(\nu)\left( \frac{2h\nu^3}{c^2}+J_{\nu}\right)\exp{\left(-\frac{h\nu}{k_{B}T}\right)}{\rm d}\nu + N_{e}C_{nk}\right]\\
-    -N{n}\left(\int_{\nu_n}^{\infty} \frac{4\pi}{h\nu}a_{n}(\nu)J_{\nu}{\rm d}\nu +N_{e}C_{nk}\right)=0
+n_{l}\left[ \sum_{k<l}A_{lk} + \sum_{k\neq l}\left( B_{lk}J_{\nu} +C_{lk}\right)\right] = \\
+\sum_{k>l}n_{k}A_{kl} + \sum_{k<\neq l} n_{k}\left(B_{kl}J_{\nu}+C_{kl} \right)
+\label{eq:balance}
 \end{multline}
+where the Einstein coefficients are spontaneous emission $A_{lk}$, stimulated emission and absorption $B_{lk}$, and collision $C_{lk}$ rates for transitions from $l\rightarrow k$. The number density of level $l$ is $n_l$ and $J_{\nu}$ is the mean intensity for frequency $\nu$. The coefficients are not calculated but taken from~\citet{Schoier:2005ja}.
+
+Using a boundary condition of the Cosmic microwave background or other bright nearby sources, TORUS solves the balance equation for each grid point iteratively. To determine the level populations a value of the mean intensity is needed, this is calculated by solving the radiative transfer equation along $i$ rays for each grid cell. The mean intensity is given by
+\begin{equation}
+    J_{\nu}=J_{\nu}^{ext}+J_{\nu}^{int}=\frac{\sum_{i}I_{\nu}^{i}\exp{\left(-\tau_{i}\phi_{\nu}\right)}}{\sum_{i}\phi_{\nu}}+\frac{\sum_{i}S_{\nu}\left(1-\exp{\left(-\tau_{i}\phi_{\nu}\right)}\right)}{\sum_{i}\phi_{\nu}}
+    \label{eq:meanintensity}
+\end{equation}
+a sum of the external intensity $J){\nu}^{ext}$ and an internal intensity $J){\nu}^{int}$. The external mean intensity (from the ambient medium) does not change as the level populations are adjusted whereas the internal intensity changes with the level populations. $\tau_{i}$ is the optical depth along the ray and the source function $S_{\nu}$ is the ration of emission to absorption
+\begin{equation}
+    S_{\nu}=\frac{n_{k}A_{kl}}{n_{l}B_{lk}-n_{k}B{kl}}.
+    \label{eq:sourcefunction}
+\end{equation}
+The line profile function $\phi_{\nu}$ is characterised by either microtubulant velocity (Gaussian) or by stark broadening (voigt) which is important for optically thick lines such as ${\rm H}\alpha$~\citep{Kurosawa:2011fh}.
+
+Solving for $J_{\nu}$ and hence the level populations is done in two phases. Initially, a set of rays are generated that originate from random positions in the grid cell with random directions and frequencies sampling the line profile function. The radiation field and level populations are iteratively solved till convergence, using the same set of rays; where the root mean square fractional change of the level populations differ by less than $1\%$. By default, TORUS solves for 15 levels with three above that held in local thermal equilibrium. The second phase uses a set of entirely randomly calculated rays, doubling the number of the rays until convergence. The second stage fills in the gaps in the frequency and spatial dimensions of the first stage. 
+
 
 
 
