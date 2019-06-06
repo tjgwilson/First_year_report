@@ -170,12 +170,12 @@ n_{l}\left[ \sum_{k<l}A_{lk} + \sum_{k\neq l}\left( B_{lk}J_{\nu} +C_{lk}\right)
 \end{multline}
 where the Einstein coefficients are spontaneous emission $A_{lk}$, stimulated emission and absorption $B_{lk}$, and collision $C_{lk}$ rates for transitions from $l\rightarrow k$. The number density of level $l$ is $n_l$ and $J_{\nu}$ is the mean intensity for frequency $\nu$. The coefficients are not calculated but taken from~\citet{Schoier:2005ja}.
 
-Using a boundary condition of the Cosmic microwave background or other bright nearby sources, TORUS solves the balance equation for each grid point iteratively. To determine the level populations a value of the mean intensity is needed, this is calculated by solving the radiative transfer equation along $i$ rays for each grid cell. The mean intensity is given by
+Using a boundary condition of the cosmic microwave background or other bright nearby sources, TORUS solves the balance equation for each grid point iteratively. To determine the level populations a value of the mean intensity is needed, this is calculated by solving the radiative transfer equation along $i$ rays for each grid cell. The mean intensity is given by
 \begin{equation}
     J_{\nu}=J_{\nu}^{ext}+J_{\nu}^{int}=\frac{\sum_{i}I_{\nu}^{i}\exp{\left(-\tau_{i}\phi_{\nu}\right)}}{\sum_{i}\phi_{\nu}}+\frac{\sum_{i}S_{\nu}\left(1-\exp{\left(-\tau_{i}\phi_{\nu}\right)}\right)}{\sum_{i}\phi_{\nu}}
     \label{eq:meanintensity}
 \end{equation}
-a sum of the external intensity $J){\nu}^{ext}$ and an internal intensity $J){\nu}^{int}$. The external mean intensity (from the ambient medium) does not change as the level populations are adjusted whereas the internal intensity changes with the level populations. $\tau_{i}$ is the optical depth along the ray and the source function $S_{\nu}$ is the ration of emission to absorption
+a sum of the external intensity $J{\nu}^{ext}$ and an internal intensity $J{\nu}^{int}$. The external mean intensity (from the ambient medium) does not change as the level populations are adjusted whereas the internal intensity changes with the level populations. $\tau_{i}$ is the optical depth along the ray and the source function $S_{\nu}$ is the ration of emission to absorption
 \begin{equation}
     S_{\nu}=\frac{n_{k}A_{kl}}{n_{l}B_{lk}-n_{k}B{kl}}.
     \label{eq:sourcefunction}
@@ -185,20 +185,41 @@ The line profile function $\phi_{\nu}$ is characterised by either microtubulant 
 Solving for $J_{\nu}$ and hence the level populations is done in two phases. Initially, a set of rays are generated that originate from random positions in the grid cell with random directions and frequencies sampling the line profile function. The radiation field and level populations are iteratively solved till convergence, using the same set of rays; where the root mean square fractional change of the level populations differ by less than $1\%$. By default, TORUS solves for 15 levels with three above that held in local thermal equilibrium. The second phase uses a set of entirely randomly calculated rays, doubling the number of the rays until convergence. The second stage fills in the gaps in the frequency and spatial dimensions of the first stage. 
 
 
-
-
 \subsection{Observed profile calculations}
+\label{sec:profilecalculations}
+Once the level populations $n_{l}$ are obtained the continuum emissivity $\chi_c$ and opacity $\eta_c$ can easily be determined. The total source function can then be calculated by
+\begin{equation}
+    S_{\nu} = \frac{\phi_{\nu}S_l+hS_{c}}{\phi_{\nu}+h}
+\end{equation}
+where the continuum source is $S_{c}=\eta_{c}/\chi_{c}$ and the line source is $S_{l}=\eta_{l}/\chi_{l}$. The line profile $\phi_{\nu}$ as mention above is characterised by either microturbulent velocity broadening or stark broadening. Although when line broadening is negligible this is given by a normal Doppler profile.
 
+To compute an observed line profile an image grid (synthetic observer) is placed at a defined location outside of the simulation grid. This is used to create a synthetic position-position-velocity atomic line data cube. Rays are calculated with random position on the image grid intersecting with the simulation grid. Each ray is weighted by the number of rays originating in the same image grid cell.
 
+The specific intensity $I_{\nu}$ for a ray along $t$ is determined from
+\begin{equation}
+I_{\nu} = I_{0}{\rm e}^{-\tau_{\infty}} + \int^{-\tau_{\infty}}_{0}S_{\nu}\left(\tau_{\nu}'\right){\rm e}^{-\tau_{\nu}'}{\rm d}\tau_{\nu}'
+\end{equation}
+where $\tau_{\nu}$ is the optical depth and $\tau_{\infty}$ is the total optical depth from the observer to the initial integration point.$I_0$ is the boundary intensity, $I_0=0$ unless the ray intersects with the stellar surface, where $I_0$ is determined from stellar atmosphere model given by~\citet{1979ApJS...40....1K}. If a ray hits the bright accretion ring on the stars surface, the intensity is calculated as a black body for the rings temperature and observed frequency.
 
+The optical depth $\tau_{\nu}$ along a path $t$ is given by
+\begin{equation}
+    \tau_{\nu} = \int_{t}^{t_{\infty}} \chi_{\nu}\left(t' \right){\rm d}t'
+\end{equation}
+where $t_{\infty}$ is the total distance to the observer or the outer boundary closest to the observer. The optical depth is integrated across the grid cells of the adaptive mesh set up by TORUS. For optically thick regions the emissivity and opacity are interpolated to additional points within the cell to keep ${\rm d}\tau_{\nu} > 0.05$. 
 
-
-
-
-
+The observed flux for a cell of the grid image is the summation of the specific intensities for all rays ending in the cell, times their weighting and the area of the cell.
 
 \section{The models}
 \label{sec:model}
+TORUS uses an adaptive mesh refinement (AMR) to create a grid of cell through which it can compute the level populations and intensities.  A numerical grid representing the physical space of the simulation is created and the coarseness of the cells is adapted to balance both the accuracy of the simulation and the efficiency. Too course a grid will loose details and may miss features such as areas of high opacity, whereas too fine a grid will run excessively slow and consume large amounts of computationally resources.
+
+For the work presented here T Tauri star-disk systems are being simulated. For this the mesh is populated with a star, disk, accretion flow and potentially outflows. The density, temperatures and velocities fields defined so as to simulate a T Tauri system. Future work will be to load in this data as an output from MHD simulations but at the present time this is done analytically. TORUS has the ability to include He in the simulations although this is as yet unvalidated. 
+
+The star is placed at the origin of the grid, and assumed to have an atmosphere as modelled by~\citet{1979ApJS...40....1K}. The disk is treated as geometrically thin optically thick disk. Rays that intersect with it are terminated, no continuum or dust emission from the disk is currently included in the model, although this will be implemented in future work.
+
+\subsection{Accretion Funnel}
+
+\subsection{Stellar Wind}
 
 \section{Current Results}
 \label{sec:results}
