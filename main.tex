@@ -129,6 +129,12 @@ Equation~\ref{eq:wind_torque} from~\citep{2005ApJ...632L.135M} gives the torque 
 
 
 Hence being able to interpret observations for signatures of accretion, winds and most importantly for mass inflow and outflow rates is paramount to constraining our understanding of the physics of early stellar evolution. MHD simulations are extensively used to model the dynamics of T Tauri stars in an attempt to understand physics of the mechanism of AM loss~\citep[e.g.][]{2009A&A...508.1117Z,Matt:2008bj,2019A&A...624A..31C,Romanova:2002hc}. Radiative transfer simulations have been used to model the detectable signatures of the predicted physical models~\citep[e.g.][]{Esau:2014is,2012MNRAS.426.2901K,Kurosawa:2011fh,1998AJ....116..455M,Hartmann:1994tl}. This work intends to concentrate on radiative transfer simulations to complement and supplement the dynamic models of the AWESoMeStars ERC research team.
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/zanni}
+    \caption{MHD simulation snapshot reproduced from~\citet{2009A&A...508.1117Z}, showing the connected disk, stellar and disk winds, and magnetospheric Ejection; another possible mechanism for angular momentum loss. The stellar wind flows along the open magnetic field lines.}
+    \label{fig:zanni}
+\end{figure}
 
 \section{Radiative Transfer}
 \label{sec:radiative}
@@ -270,12 +276,6 @@ Based on the work by~\citet{Mahdavi:1998fw} TORUS allows 3D models to have an of
 \subsection{Stellar Wind}
 \label{sec:wind}
 TORUS contained the code to initialise spherical isotropic stellar wind into the simulation grid. However, this is an unphysical description of possible stellar winds when in conjunction with disks and magnetospheric accretion. A better approximation is a wind that flows along the open magnetic field lines above the magnetospheric accretion funnel flow~\citep[e.g.][]{2009A&A...508.1117Z,2012MNRAS.426.2901K} see Figure~\ref{fig:zanni}.
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{figures/zanni}
-    \caption{MHD simulation snapshot reproduced from~\citet{2009A&A...508.1117Z}, showing the connected disk, stellar and disk winds, and magnetospheric Ejection; another possible mechanism for angular momentum loss. The stellar wind flows along the open magnetic field lines.}
-    \label{fig:zanni}
-\end{figure}
 
 A newly updated wind system is now available in TORUS, which allows the system to have a non-spherically symmetric polar wind. Similar work by \citet{Kurosawa:2011fh} implemented a polar stellar wind starting from a radius $R_0$ above the stellar surface the reason for the wind not originating at the stellar surface was that it restricted the wind to a half opening angle of $\sim 35^{\circ}$. The stellar wind presented here overcomes this problem by allowing the wind to follow the dipole magnetic field lines out till they reach the desired half opening angle, at which point the wind becomes radial~\ref{fig:wind}.
 \begin{figure}
@@ -306,12 +306,12 @@ for radii $R_{\ast}\leq R < R_{\rm A}$ where $A_{\ast}$ is the surface area at o
 \begin{equation}
     \rho = \frac{1}{2}\frac{\dot{M}_{\rm wind}}{V(R)A_{A}}\left( \frac{R_{A}}{R}\right)^2
 \end{equation}
-where $A_A$ is the spherical cap surface area with radius $R_A$ such that $A_A = 2\pi R^2 (1-\cos\theta_{\rm open})$ where $\theta_{\rm open}$ is the user defined max opening angle of the wind (see Figure~\ref{fig:wind}).
+where $A_A$ is the spherical cap surface area with radius $R_A$ such that $A_A = 2\pi R^2 (1-\cos\theta_{\rm open})$ where $\theta_{\rm open}$ is the user defined max opening angle of the wind (see Figure~\ref{fig:wind}). Should the magnetic dipole be offset from the rotation axis the wind follows the tilted magnetic field before becoming radial.
 
 \section{Current Results}
 \label{sec:results}
 
-The current work has been implementing the stellar wind (See~\ref{sec:wind}) code and replicating the results of~\citet{1998ApJ...492..743M}. Their results were computed using the Sobolev approximation and were in agreement with~\citet{Hartmann:1994tl}.
+The current work has been implementing the stellar wind (See~\ref{sec:wind}) code and replicating the results of~\citet{1998ApJ...492..743M}. Their results for a cylindrically symmetric T Tauri star with an accretion flow but no stellar wind or disk winds were computed using the Sobolev approximation and are in agreement with~\citet{Hartmann:1994tl}.
 
 Figure~\ref{fig:muzerolle} shows the figure that we are trying to replicate with TORUS using the CMF module (see \S\ref{sec:statistical}) of the radiative transfer code. 
 \begin{figure}
@@ -321,10 +321,27 @@ Figure~\ref{fig:muzerolle} shows the figure that we are trying to replicate with
     \label{fig:muzerolle}
 \end{figure}
 
+The model used to create the ${\rm H}\alpha$ line profiles shown in Figure~\ref{fig:muzerolle} has the following characteristics. The mass accretion rate is $10^{-7} ~{\rm \dot{M}_{\odot}yr^{-1}}$ with a maximum accretion flow temperature of $7500~\textrm{K}$. The star's features were $R_{\ast}=2~{\rm R_{\odot}}$, $M_{\ast}=0.8~{\rm M_{\odot}}$, the photosphere temperature was $4000~\textrm{K}$ and the maximum hot spot temperature $7200~\textrm{K}$, the stellar atmosphere was modelled as a blackbody. The magnetosphere had an inner radius of $2.2~{\rm R_{\ast}}$ and an outer radius of $3~{\rm R_{\ast}}$. Stellar rotation is neglected and assumed to be negligible.
+
+The T Tauri star model set up for our simulation run with TORUS use the same physical properties apart from, the stellar photosphere is modelled as given by~\citet{1979ApJS...40....1K} rather than a blackbody. The temperature distribution within the accretion flow differs at the outer radii from that used by~\citet{1998ApJ...492..743M} see Figure~\ref{fig:density}.
+
+Initial tests of the model were hampered by several bugs within the CMF code and what broadening parameters should be used. The current best ${\rm H}\alpha$ line profile using microtubulant broadening with a characteristic velocity of $2~{\rm kms^{-1}}$ is shown in Figure~\ref{fig:bestline}
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\linewidth]{figures/results}
+    \caption{${\rm H}\alpha$ line profiles from TORUS (black line) and~\citep{1998ApJ...492..743M} (red dashed) with viewing angles of $10^{\circ}$ (left panel) and of $60^{\circ}$ (right panel). The}
+    \label{fig:bestline}
+\end{figure*}
+
+Our results display a the characteristic Inverse P-Cygni profile especially when viewed from an inclination of $60^{\circ}$. However, our results show a much stronger emission from that of\citep{1998ApJ...492..743M} for emissions with a low Doppler shift. The line widths are similar and for an inclination of $10^{\circ}$ our results show the expected double peak.
 
 \section{Conclusions}
 \label{sec:conclusions}
+The propriety work to using radiative transfer simulations to model the observational signatures T Tauri stars by creating synthetic atomic line profiles has been undertaken. These results will potentially lead to new insights into the mechanism of angular momentum loss in these stars and further our understanding of the evolution of pre-main sequence stars.
 
+Work to replicate the results of~\citep{1998ApJ...492..743M} has yielded line profiles with similar signatures but further investigation is needed to determine whether the differences are due to errors in the TORUS code or are the result of the different radiative transfer system used.
+The code to implement a polar stellar wind in the set up of the T Tauri star model has been written and integrated with the existing TORUS code. It is still unvalidated but future work could compare the results to those of~\citet{Kurosawa:2011fh}.
 %\section*{Acknowledgements}
 
 
@@ -333,7 +350,7 @@ Figure~\ref{fig:muzerolle} shows the figure that we are trying to replicate with
 %%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%
 
 % The best way to enter references is to use BibTeX:
-
+\clearpage
 \bibliographystyle{mnras}
 \bibliography{library} % if your bibtex file is called example.bib
 
