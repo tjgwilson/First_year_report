@@ -100,7 +100,7 @@ Understanding the mechanism by which collapsing interstellar clouds lose angular
 Progenitors to Sun-like objects are T Tauri stars. These are low mass ($\lesssim 2 \textrm{M}_\odot$) pre-main sequence stars which show evidence of accretion from a surrounding accretion disk~\citep{1998ApJ...495..385H}. These young stars ($\lesssim3\times10^{6}~\textrm{yrs}$) have strong H$\alpha$ emission and excess UV and infrared continuum emission~\citep{2005MNRAS.358..671K}. The line profiles exhibit both blue shifted absorption and inverse P Cygni features thought to be evidence of outflows and inflows, respectively. Observed accretion rates ($10^{-9}~\textrm{to}~10^{-7}~{\rm M_{\odot} yr^{-1}}$) are expected to be great enough to transfer enough AM to the star to spin it up to well above break up angular velocity $\Omega_B = \sqrt{GM_{*}/R_{*}^3}$~\citep{2005ApJ...632L.135M} where $M_{\ast}$ and $R_{\ast}$ are the stellar mass and radius respectively. However, a relevant fraction of these stars are rotating well below their rotation limit~\citep{1993A&A...272..176B}, and during the few million years of their accretion phase, their rotation remains fairly constant. In this phase of their evolution, these protostars are still accreting and contracting at rates that should spin them up to break velocity within $\sim10^{6}~{\rm yrs}$~\citep{2009A&A...508.1117Z}. There must be an efficient mechanism to spin down the rotation of the T Tauri stars. 
 
 
-It is widely accepted that T Tauri stars have accretion disks. Infrared excess and accretion signatures point to their presence. In recent years interferometric observations have confirmed the presence of disks around young stellar objects, for example, the slightly larger Herbig star system shown by \cite{2012ApJ...752...11K} to have a circumstellar disk. The accretion mechanism of T Tauri stars is thought to be dominated by the strong magnetic fields present, $\sim 10^{3}~\textrm{G}$~\citep{2012MNRAS.426.2901K}. \citet{1991ApJ...370L..39K} proposed that the accretion mechanism is similar to that of neutrons stars proposed by~\citet{1977ApJ...217..578G}. The magnetic field truncates the accretion radius at some radii $R_T$. where the magnetic and material stresses are of the same order; $B^2/8\pi = p + \rho v^2$, where $B$, $p$, $\rho$ and $v$ are the magnetic field, pressure, density, and velocity respectively~\citep{Romanova:2002hc}. Material is lifted from the disk and free-falls to the stellar surface where it forms a shock region, as the infalling matter exceeds the sound speed of the plasma. The large energy release in these shock zones could be responsible for the high UV excess observed~\citep{2009A&A...508.1117Z}. The accreting matter carries AM to the star and acts to `spin-up' the star. For a given accretion rate $\dot{M}_{acc}$ the `spin-up' rate can be quantified as a torque~\citep{2005ApJ...632L.135M}
+It is widely accepted that T Tauri stars have accretion disks. Infrared excess and accretion signatures point to their presence. In recent years interferometric observations have confirmed the presence of disks around young stellar objects, for example, the slightly larger Herbig star system shown by \cite{2012ApJ...752...11K} to have a circumstellar disk. The accretion mechanism of T Tauri stars is thought to be dominated by the strong magnetic fields present, $\sim 10^{3}~\textrm{G}$~\citep{2012MNRAS.426.2901K}. \citet{1991ApJ...370L..39K} proposed that the accretion mechanism is similar to that of neutrons stars proposed by~\citet{1977ApJ...217..578G}. The magnetic field truncates the accretion radius at some radii $R_T$ (see Figure~\ref{fig:accretionflow}). where the magnetic and material stresses are of the same order; $B^2/8\pi = p + \rho v^2$, where $B$, $p$, $\rho$ and $v$ are the magnetic field, pressure, density, and velocity respectively~\citep{Romanova:2002hc}. Material is lifted from the disk and free-falls to the stellar surface where it forms a shock region, as the infalling matter exceeds the sound speed of the plasma. The large energy release in these shock zones could be responsible for the high UV excess observed~\citep{2009A&A...508.1117Z}. The accreting matter carries AM to the star and acts to `spin-up' the star. For a given accretion rate $\dot{M}_{acc}$ the `spin-up' rate can be quantified as a torque~\citep{2005ApJ...632L.135M}
 
 \begin{equation}
     \tau_{acc} = \dot{M}_{acc}\sqrt{GM_{\ast}R_{T}}.
@@ -211,6 +211,13 @@ The observed flux for a cell of the grid image is the summation of the specific 
 
 \section{The models}
 \label{sec:model}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/Accretion}
+    \caption{A diagram showing the accretion flow and the density of the flow for a typical set up with an accretion rate of $10^{-7}$ solar masses per year.}
+    \label{fig:accretionflow}
+\end{figure}
 TORUS uses an adaptive mesh refinement (AMR) to create a grid of cell through which it can compute the level populations and intensities.  A numerical grid representing the physical space of the simulation is created, and the coarseness of the cells is adapted to balance both the accuracy of the simulation and the efficiency. Too coarse a grid will lose details and may miss features such as areas of high opacity, whereas too fine a grid will run excessively slow and consume large amounts of computational resources.
 
 The work here presents the simulation of T Tauri star-disk systems. For this, the mesh is populated with a star, disk, accretion flow and potentially outflows. The density, temperatures and velocities fields are defined to simulate a T Tauri system. Future work will load in this data as an output from MHD simulations, but at present, this is done analytically. TORUS can include He in the simulations although this is as yet unvalidated. 
@@ -218,7 +225,7 @@ The work here presents the simulation of T Tauri star-disk systems. For this, th
 The star is placed at the origin of the grid and assumed to have an atmosphere as modelled by~\citet{1979ApJS...40....1K}. The disk is treated as a geometrically thin, optically thick disk. Rays that intersect with it are terminated, no continuum or dust emission from the disk is currently included in the model, although this will be implemented in future work.
 
 \subsection{Accretion Funnel}
-\label{sec:accretionflow}
+\label{sec:accretion}
 The geometry and parameters of the accretion flow are similar to those described by \citet{1998ApJ...495..385H}. The inner radius of the accretion flow is where the disk is truncated $R_{T}$. The outer radius $R_{\rm out}$ of the accretion flow is assumed to be the corotation radius, to avoid a ring of rapid acceleration where the disk spins up or down to match the magnetic field which is rotating as a rigid body with the star. Although MHD simulation show a twisting of the magnetic fields~\citep[e.g.][]{Uzdensky:2002dg} this is ignored in these simulation and the magnetic field is assumed to have only a poloidal component.
 
 The accreting matter free flows following the dipole magnetic field impacting on the surface of the star creating a hot spot. The temperature of the hot spot is calculated from the potential energy liberated as the matter falls to a lower radius.
@@ -244,16 +251,32 @@ The density of the accretion flow is taken from~\citep{Hartmann:1994tl}. For an 
 \begin{equation}
     \rho = \frac{\dot{M}_{\rm acc}}{4\pi(1/R_T - 1/R_{\rm out})}\frac{R^{-5/2}}{\sqrt{2GM_{\ast}}}\frac{\sqrt{4-3\sin^2\theta}}{\sqrt{1-\sin^2\theta}}
 \end{equation}
-The temperature distribution of the accretion flow is more problematic. The synthetic emission lines are very sensitive to temperature variations in these regions but exact mechanism of heating is debated. The temperature profile adopted is similar that used by~\citet{Hartmann:1994tl,1998AJ....116..455M} which assumes a volumetric heating $\propto R^{-3}$ balanced by radiative cooling. Figure~\ref{fig:density} shows the temperature, density and velocity distributions used in our models compared to those used by~\citet{1998AJ....116..455M}.
+The temperature distribution of the accretion flow is more problematic. The synthetic emission lines are very sensitive to temperature variations in these regions but exact mechanism of heating is debated. The temperature profile adopted is similar that used by~\citet{Hartmann:1994tl,1998ApJ...492..743M} which assumes a volumetric heating $\propto R^{-3}$ balanced by radiative cooling. Figure~\ref{fig:density} shows the temperature, density and velocity distributions used in our models compared to those used by~\citet{1998ApJ...492..743M}.
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth,trim={0 1cm 0 0},clip]{figures/density}
-    \caption{Caption}
+    \caption{A plot of the velocity (top), density (middle) and temperature (bottom) distribution in the accretion flow plotted against the radius. Red marks are taken from the TORUS grid points and the black points are the distribution used by~\citet{1998ApJ...492..743M}}
     \label{fig:density}
 \end{figure}
 
+Based on the work by~\citet{Mahdavi:1998fw} TORUS allows 3D models to have an offset $\beta$ to the magnetic dipole from the rotation axis. The result of this is a preferable accretion on opposite sides of the star, see Figure~\ref{fig:3Doffset}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth,trim={2cm 1cm 2cm 1cm},clip]{figures/3Doffset}
+    \caption{A 3D rendering of T Tauri star set up where a 10 degree magnetic offset has been stipulated. The accretion flow is in opposite hemispheres, favouring the shortest route to stellar surface. Part of the wind and accretion flow have been cut away showing the star and hot spot zones.}
+    \label{fig:3Doffset}
+\end{figure}
 
 \subsection{Stellar Wind}
+TORUS contained the code to initialise spherical isotropic stellar wind into the simulation grid. However, this is a unphysical description of possible stellar winds when in conjunction with disks and magnetospheric accretion. A better approximation is a wind that flows along the open magnetic field lines above the magnetospheric accretion funnel flow~\citep[e.g.][]{2009A&A...508.1117Z} see Figure~\ref{fig:zanni}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/zanni}
+    \caption{MHD simulation snapshot reproduced from~\citet{2009A&A...508.1117Z}, showing the connected disk, stellar and disk winds, and magnetospheric Ejection; another possible mechanism for angular momentum loss. The stellar wind flows along the open magnetic field lines.}
+    \label{fig:zanni}
+\end{figure}
+
+A newly updated wind system is now available in TORUS, which allows the system to have a polar wind from either pole. Unlike the work by~
 
 \section{Current Results}
 \label{sec:results}
