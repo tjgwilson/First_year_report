@@ -85,7 +85,7 @@ $^{1}$College of Engineering, Mathematics and Physical Sciences, Physics Buildin
 \maketitle
 % Abstract of the paper
 \begin{abstract}
-\noindent hi there
+\noindent The proprietary work of using TORUS to simulate the observational signatures of T Tauri stars and their accretion inflow and wind outflow has begun. Attempts have been made to replicate the results of the literature. A new co-moving-frame radiative transfer code is being tested and validated against known result created using the Sobolev approximation. A new stellar wind set up for the T Tauri model has been written giving a wind that extends down to the stellar surface.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -311,9 +311,9 @@ where $A_A$ is the spherical cap surface area with radius $R_A$ such that $A_A =
 \section{Current Results}
 \label{sec:results}
 
-The current work has been implementing the stellar wind (See~\ref{sec:wind}) code and replicating the results of~\citet{1998ApJ...492..743M}. Their results for a cylindrically symmetric T Tauri star with an accretion flow but no stellar wind or disk winds were computed using the Sobolev approximation and are in agreement with~\citet{Hartmann:1994tl}.
+The current work is the implementation of the stellar wind in the T Tauri model (See~\ref{sec:wind}) and replicating the results of~\citet{1998ApJ...492..743M}. Their results for a cylindrically symmetric T Tauri star with an accretion flow but no stellar or disk winds were computed using the Sobolev approximation and agree with \citet{Hartmann:1994tl}.
 
-Figure~\ref{fig:muzerolle} shows the figure that we are trying to replicate with TORUS using the CMF module (see \S\ref{sec:statistical}) of the radiative transfer code. 
+Using TORUS, we are attempting to replicate the results shown in Figure \ref{fig:muzerolle} using the CMF module (see \S\ref{sec:statistical}) of the radiative transfer code. 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{figures/muz}
@@ -323,9 +323,9 @@ Figure~\ref{fig:muzerolle} shows the figure that we are trying to replicate with
 
 The model used to create the ${\rm H}\alpha$ line profiles shown in Figure~\ref{fig:muzerolle} has the following characteristics. The mass accretion rate is $10^{-7} ~{\rm \dot{M}_{\odot}yr^{-1}}$ with a maximum accretion flow temperature of $7500~\textrm{K}$. The star's features were $R_{\ast}=2~{\rm R_{\odot}}$, $M_{\ast}=0.8~{\rm M_{\odot}}$, the photosphere temperature was $4000~\textrm{K}$ and the maximum hot spot temperature $7200~\textrm{K}$, the stellar atmosphere was modelled as a blackbody. The magnetosphere had an inner radius of $2.2~{\rm R_{\ast}}$ and an outer radius of $3~{\rm R_{\ast}}$. Stellar rotation is neglected and assumed to be negligible.
 
-The T Tauri star model set up for our simulation run with TORUS use the same physical properties apart from, the stellar photosphere is modelled as given by~\citet{1979ApJS...40....1K} rather than a blackbody. The temperature distribution within the accretion flow differs at the outer radii from that used by~\citet{1998ApJ...492..743M} see Figure~\ref{fig:density}.
+The T Tauri model set up in TORUS uses the same physical properties as above, except the stellar photosphere is modelled as given by the atmosphere described by~\citet{1979ApJS...40....1K}. The temperature distribution within the accretion flow also differs at the outer radii from that used by~\citet{1998ApJ...492..743M} see Figure~\ref{fig:density}.
 
-Initial tests of the model were hampered by several bugs within the CMF code and what broadening parameters should be used. The current best ${\rm H}\alpha$ line profile using microtubulant broadening with a characteristic velocity of $2~{\rm kms^{-1}}$ is shown in Figure~\ref{fig:bestline}
+Several bugs, within the CMF code, hampered the initial tests of the model. The most recent synthetic ${\rm H}\alpha$ line profile created using microtubulant broadening with a characteristic velocity of $2~{\rm kms^{-1}}$ are shown in Figure~\ref{fig:bestline}.
 
 \begin{figure*}
     \centering
@@ -334,14 +334,15 @@ Initial tests of the model were hampered by several bugs within the CMF code and
     \label{fig:bestline}
 \end{figure*}
 
-Our results display a the characteristic Inverse P-Cygni profile especially when viewed from an inclination of $60^{\circ}$. However, our results show a much stronger emission from that of\citep{1998ApJ...492..743M} for emissions with a low Doppler shift. The line widths are similar and for an inclination of $10^{\circ}$ our results show the expected double peak.
+The results display a characteristic Inverse P-Cygni profile, notably for the inclination of $60^{\circ}$. However, the results from TORUS show a stronger emission from that of\citep{1998ApJ...492..743M}. The line widths are similar, and for an inclination of $10^{\circ}$, the results show the expected double peak.
 
 \section{Conclusions}
 \label{sec:conclusions}
-The propriety work to using radiative transfer simulations to model the observational signatures T Tauri stars by creating synthetic atomic line profiles has been undertaken. These results will potentially lead to new insights into the mechanism of angular momentum loss in these stars and further our understanding of the evolution of pre-main sequence stars.
+The proprietary work to using radiative transfer simulations to model the observational signatures T Tauri stars by creating synthetic atomic line profiles has been successful. Future results will potentially lead to new insights into the mechanisms of angular momentum loss and further the understanding of the evolution of pre-main sequence stars.
 
-Work to replicate the results of~\citep{1998ApJ...492..743M} has yielded line profiles with similar signatures but further investigation is needed to determine whether the differences are due to errors in the TORUS code or are the result of the different radiative transfer system used.
-The code to implement a polar stellar wind in the set up of the T Tauri star model has been written and integrated with the existing TORUS code. It is still unvalidated but future work could compare the results to those of~\citet{Kurosawa:2011fh}.
+Work to replicate the results of~\citep{1998ApJ...492..743M} has yielded line profiles with similar signatures, but further investigation is needed to determine whether the differences are due to errors in the TORUS code or are the result of the different radiative transfer system used. The radiative transfer system implemented in TORUS is a co-moving-frame solution whereas previous works in literature \citep[e.g.][]{Lima:2010bo,Kurosawa:2006gd,1998ApJ...492..743M,Hartmann:1994tl} have used a Sobolev approximation to determine the level populations.
+
+The code to implement a polar stellar wind in the set up of the T Tauri star model has been written and integrated with the existing TORUS code. It is still unvalidated, but future work will compare the results to those of~\citet{Kurosawa:2011fh}.
 %\section*{Acknowledgements}
 
 
@@ -350,7 +351,7 @@ The code to implement a polar stellar wind in the set up of the T Tauri star mod
 %%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%
 
 % The best way to enter references is to use BibTeX:
-\clearpage
+%\clearpage
 \bibliographystyle{mnras}
 \bibliography{library} % if your bibtex file is called example.bib
 
