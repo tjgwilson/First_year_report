@@ -40,9 +40,9 @@
 %%%%% AUTHORS - PLACE YOUR OWN PACKAGES HERE %%%%%
 
 % Only include extra packages if you really need them. Common packages are:
-\usepackage{graphicx}	% Including figure files
-\usepackage{amsmath}	% Advanced maths commands
-\usepackage{amssymb}	% Extra maths symbols
+\usepackage{graphicx}    % Including figure files
+\usepackage{amsmath}    % Advanced maths commands
+\usepackage{amssymb}    % Extra maths symbols
 \usepackage{lscape}
 \usepackage{rotating}
 \usepackage{esdiff}
@@ -54,7 +54,7 @@
 
 % Please keep new commands to a minimum, and use \newcommand not \def to avoid
 % overwriting existing commands. Example:
-%\newcommand{\pcm}{\,cm$^{-2}$}	% per cm-squared
+%\newcommand{\pcm}{\,cm$^{-2}$}    % per cm-squared
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -111,6 +111,12 @@ How these T Tauri stars are being braked is still debated~\citep{Hartmann:2016gu
 
 The star-disk interactions rely on Magnetohydrodynamic (MHD) mechanism to remove angular momentum from the star. Magnetic fields threading through the disk and star will provide a negative (or `spin-down') torque if they pass through the accretion disk at radii beyond the corotation radius. The poloidal field lines become twisting as the conductive disk opposes their toroidal passage~\citep{Uzdensky:2002dg} resulting in a `spin-down' torque on the star.  However it not clear whether a `spin-down' torque great enough to match the AM transferred by accretion can be achieved by this magnetic breaking.~\citet{2009A&A...508.1117Z} concluded that for their numerical example the spin down torque from the magnetospheric star-disk ``locking'' could only account for $10\%$ of the spin-up torque from accretion.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/Accretion}
+    \caption{A diagram showing the accretion flow and the density of the flow for a typical set up with an accretion rate of $10^{-7}$ solar masses per year.}
+    \label{fig:accretionflow}
+\end{figure}
 
 \citep{Shu:tw} proposed that a disk wind along open field lines threading the disk at the corotation radius (``X-wind'') could remove enough AM from the disk that it could render the `spin-up' torque from accretion negligible. This theory still lacks a fully self-consistent dynamical explanation. Another proposed mechanism that the AM can be removed from the star via the interaction of the magnetic field and a stellar wind~\citep[e.g.][]{2005ApJ...632L.135M,Matt:2008bj}. 
 
@@ -212,12 +218,6 @@ The observed flux for a cell of the grid image is the summation of the specific 
 \section{The models}
 \label{sec:model}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{figures/Accretion}
-    \caption{A diagram showing the accretion flow and the density of the flow for a typical set up with an accretion rate of $10^{-7}$ solar masses per year.}
-    \label{fig:accretionflow}
-\end{figure}
 TORUS uses an adaptive mesh refinement (AMR) to create a grid of cell through which it can compute the level populations and intensities.  A numerical grid representing the physical space of the simulation is created, and the coarseness of the cells is adapted to balance both the accuracy of the simulation and the efficiency. Too coarse a grid will lose details and may miss features such as areas of high opacity, whereas too fine a grid will run excessively slow and consume large amounts of computational resources.
 
 The work here presents the simulation of T Tauri star-disk systems. For this, the mesh is populated with a star, disk, accretion flow and potentially outflows. The density, temperatures and velocities fields are defined to simulate a T Tauri system. Future work will load in this data as an output from MHD simulations, but at present, this is done analytically. TORUS can include He in the simulations although this is as yet unvalidated. 
@@ -226,11 +226,11 @@ The star is placed at the origin of the grid and assumed to have an atmosphere a
 
 \subsection{Accretion Funnel}
 \label{sec:accretion}
-The geometry and parameters of the accretion flow are similar to those described by \citet{1998ApJ...495..385H}. The inner radius of the accretion flow is where the disk is truncated $R_{T}$. The outer radius $R_{\rm out}$ of the accretion flow is assumed to be the corotation radius, to avoid a ring of rapid acceleration where the disk spins up or down to match the magnetic field which is rotating as a rigid body with the star. Although MHD simulation show a twisting of the magnetic fields~\citep[e.g.][]{Uzdensky:2002dg} this is ignored in these simulation and the magnetic field is assumed to have only a poloidal component.
+The geometry and parameters of the accretion flow are similar to those described by \citet{1998ApJ...495..385H}. The inner radius of the accretion flow is where the disk is truncated $R_{T}$. The outer radius $R_{\rm out}$ of the accretion flow is assumed to be the corotation radius, to avoid a ring of rapid acceleration where the disk spins up or down to match the magnetic field which is rotating as a rigid body with the star. Although MHD simulations show twisting of the magnetic fields~\citep[e.g.][]{Uzdensky:2002dg} this is ignored in, and the magnetic field is assumed to have only a poloidal component.
 
 The accreting matter free flows following the dipole magnetic field impacting on the surface of the star creating a hot spot. The temperature of the hot spot is calculated from the potential energy liberated as the matter falls to a lower radius.
 
-The geometry of the field is as explored by~\citet{1991ApJ...370L..39K,1977ApJ...217..578G}. For a starting radius at the equator $R_{0}$ in spherical coordinates, with a colatitude $theta$ the dipole streamline is given by
+The geometry of the field is as explored by~\citet{1991ApJ...370L..39K,1977ApJ...217..578G}. For a starting radius at the equator, $R_{0}$ in spherical coordinates, with a colatitude $theta$ the dipole streamline is given by
 \begin{equation}
     R = R_{0}\sin^{2}(\theta).
 \end{equation}
@@ -268,7 +268,8 @@ Based on the work by~\citet{Mahdavi:1998fw} TORUS allows 3D models to have an of
 \end{figure}
 
 \subsection{Stellar Wind}
-TORUS contained the code to initialise spherical isotropic stellar wind into the simulation grid. However, this is a unphysical description of possible stellar winds when in conjunction with disks and magnetospheric accretion. A better approximation is a wind that flows along the open magnetic field lines above the magnetospheric accretion funnel flow~\citep[e.g.][]{2009A&A...508.1117Z} see Figure~\ref{fig:zanni}.
+\label{sec:wind}
+TORUS contained the code to initialise spherical isotropic stellar wind into the simulation grid. However, this is an unphysical description of possible stellar winds when in conjunction with disks and magnetospheric accretion. A better approximation is a wind that flows along the open magnetic field lines above the magnetospheric accretion funnel flow~\citep[e.g.][]{2009A&A...508.1117Z,2012MNRAS.426.2901K} see Figure~\ref{fig:zanni}.
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{figures/zanni}
@@ -276,11 +277,41 @@ TORUS contained the code to initialise spherical isotropic stellar wind into the
     \label{fig:zanni}
 \end{figure}
 
-A newly updated wind system is now available in TORUS, which allows the system to have a polar wind from either pole. Unlike the work by~
+A newly updated wind system is now available in TORUS, which allows the system to have a non-spherically symmetric polar wind. Similar work by \citet{Kurosawa:2011fh} implemented a polar stellar wind starting from a radius $R_0$ above the stellar surface the reason for the wind not originating at the stellar surface was that it restricted the wind to a half opening angle of $\sim 35^{\circ}$. The stellar wind presented here overcomes this problem by allowing the wind to follow the dipole magnetic field lines out till they reach the desired half opening angle, at which point the wind becomes radial~\ref{fig:wind}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/wind}
+    \caption{Depiction of the stellar wind used by TORUS. The wind follows the poloidal direction of the dipole magnetic field until it reaches the half-width opening angle required.}
+    \label{fig:wind}
+\end{figure}
+The magnitude of the poloidal component of the stellar wind velocity is given a beta law,
+\begin{equation}
+    V_{p}(R) = V_{\rm min} + \left( V_{\rm max}-V_{\rm min}\right)\left(1-\frac{R_{\ast}}{R}\right)^{\beta}
+    \label{eq:beta}
+\end{equation}
+where $V_{\rm min}$ and $V_{\rm max}$ are the starting and end velocities of the wind. $\beta$ is a parameter that can be tuned to find the correct wind gradient. The toroidal velocity component $V_{T}(R)$ is derived from the rotation rate of the star. The wind is threaded by a magnetic field and the stellar wind is assumed to corotate as a rigid body with the star out till the Alfv\'en radius. Beyond this the wind conserves angular momentum, the velocity decreasing as a function of $\propto 1/R$, see Figure~\ref{fig:polVel}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/torVel}
+    \caption{An example of the toroidal velocity magnitude profile for a stellar wind. The point where the wind stops acting as rigid body with the star is an approximation of the Alfv\'en radius.}
+    \label{fig:polVel}
+\end{figure}
+
+The density of the stellar wind is derived from the input mass loss rate $\dot{M}_{\rm wind}$. The wind density goes with $\rho \propto \dot{M}_{\rm wind}/VA$ where is $V$ is the velocity of the wind normal to the surface $A$. Up to the Alfv\'en radius the wind can be assumed to be contained within a diverging flux tube, the magnetic flux of a dipole diverges at a rate of $1/R^3$ hence the surface $A \propto R^3$ and the density decreases as $\propto 1/R^3$. Beyond the Alfv\'en radius, the surface $A$ increases as a spherical cap (radial flow) so the density decreases $\propto 1/R^2$. The density is computed by
+\begin{equation}
+    \rho = \frac{1}{2}\frac{\dot{M}_{\rm wind}}{V(R)A_{\ast}}\left( \frac{R_{\ast}}{R}\right)^3
+\end{equation}
+for radii $R_{\ast}\leq R < R_{\rm A}$ where $A_{\ast}$ is the surface area at one pole of the star from which the stellar wind is launched. For radii greater than the Alfv\'en radius $R_{\rm A}$ the density is given by
+
+\begin{equation}
+    \rho = \frac{1}{2}\frac{\dot{M}_{\rm wind}}{V(R)A_{A}}\left( \frac{R_{A}}{R}\right)^2
+\end{equation}
+where $A_A$ is the spherical cap surface area with radius $R_A$ such that $A_A = 2\pi R^2 (1-\cos\theta_{\rm open})$ where $\theta_{\rm open}$ is the user defined max opening angle of the wind (see Figure~\ref{fig:wind}).
 
 \section{Current Results}
 \label{sec:results}
 
+Current work has been in implementing the stellar wind (See~\ref{sec:wind})
 \section{Conclusions}
 \label{sec:conclusions}
 
@@ -307,7 +338,7 @@ A newly updated wind system is now available in TORUS, which allows the system t
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Don't change these lines
-\bsp	% typesetting comment
+\bsp    % typesetting comment
 \label{lastpage}
 \end{document}
 
